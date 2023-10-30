@@ -30,6 +30,7 @@ for(let i in lista){
 
 console.log(lista.length);//nos va indicar el tamaño del array, esto no lleva parecentesis porque es un atributo
 
+/*
 function sumar(x: number, y:number):number {
     return x + y;
 }
@@ -48,4 +49,48 @@ window.addEventListener("load",  ()=> {
     sayHello();
     sayHello();
     console.log(sumar(2, 3));
+});
+*/
+
+class Persona{
+    private nombre: string;
+    private apellido: string;
+
+    constructor(nombre: string, apellido: string){
+        this.nombre = nombre;
+        this.apellido = apellido;
+    }
+
+    saludar(){
+        alert("hola " + this.apellido);
+    }
+}
+
+class Estudiante extends Persona{
+
+}
+
+class Profesor extends Persona{
+    materia: string;
+
+    constructor(nombre: string, apellido: string, materia: string){
+        super(nombre,apellido);
+        this.materia = materia;
+    }
+
+    presentarse(){
+        super.saludar();
+        alert("Soy profesor de "+ this.materia);
+    }
+}
+
+window.addEventListener("load",  ()=> {
+    let persona: Persona = new Persona("Facundo", "Villa");
+    persona.saludar();
+
+    let profesor: Profesor = new Profesor("Matias", "Ramos","Aplicaciones Web");
+    profesor.presentarse();
+
+    let estudiante: Estudiante = new Estudiante("Leandro", "Ventura");
+
 });
