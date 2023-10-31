@@ -1,102 +1,31 @@
+class Main implements EventListenerObject{
+    public usuarios: Array<Usuario>= new Array<Usuario>();
 
-function sayHello(){
-    let current_value = document.getElementById("textarea_1") as HTMLInputElement;
-    let new_value = "Hello world!!!" + "\n" + current_value.value;
-    document.getElementById("textarea_1").innerHTML = new_value;
-}
+    private buscarPersonas(){
+        let usuario1: Usuario = new Usuario("user1","user","123456");
+        let usuario2: Usuario = new Usuario("admin1","admin","123")
+        this.usuarios.push(usuario1);
+        this.usuarios.push(usuario2);
+        for (let u of this.usuarios){
+            console.log(u.mostrar())
+        }
+    }
 
-let numero:number = 15;
-console.log("el numero es: " + numero);
+    handleEvent(object: Event): void {
+        this.buscarPersonas();
+    }
 
-let verdadero: boolean;
-verdadero = true;
-
-if (verdadero){
-    console.log("Es verdadero");
-} else{
-    console.log("Es Falso")
-}
-
-let lista: Array<string>;
-lista = new Array<string>(); //le asignamos un espacio de memoria
-
-lista.push("nueva"); //agregamos un dato al array
-lista.push("otra");
-lista.push("termi");
-
-for(let i in lista){
-    console.log(lista[i]);
-}
-
-console.log(lista.length);//nos va indicar el tamaño del array, esto no lleva parecentesis porque es un atributo
-
-/*
-function sumar(x: number, y:number):number {
-    return x + y;
-}
-function restar(x: number, y:number):number {
-    return x - y;
-}
-
-function ejecutar(numero1: number, numero2: number, func: any) {
-    alert(func(numero1, numero2));
 }
 
 
 window.addEventListener("load",  ()=> {
-    sayHello();
-    sayHello();
-    sayHello();
-    sayHello();
-    console.log(sumar(2, 3));
-});
-*/
 
-class Persona{
-    private nombre: string;
-    private apellido: string;
-
-    constructor(nombre: string, apellido: string){
-        this.nombre = nombre;
-        this.apellido = apellido;
-    }
-
-    saludar(){
-        alert("hola " + this.apellido);
-    }
-}
-
-class Estudiante extends Persona{
-
-}
-
-class Profesor extends Persona{
-    materia: string;
-
-    constructor(nombre: string, apellido: string, materia: string){
-        super(nombre,apellido);
-        this.materia = materia;
-    }
-
-    presentarse(){
-        super.saludar();
-        alert("Soy profesor de "+ this.materia);
-    }
-}
-
-window.addEventListener("load",  ()=> {
+    let main: Main = new Main();
 
     let boton = document.getElementById("btnSaludar");
-    boton.addEventListener("click",sayHello);
 
+    boton.addEventListener("click",main);
 
-    let persona: Persona = new Persona("Facundo", "Villa");
-    persona.saludar();
-
-    let profesor: Profesor = new Profesor("Matias", "Ramos","Aplicaciones Web");
-    profesor.presentarse();
-
-    let estudiante: Estudiante = new Estudiante("Leandro", "Ventura");
 
 });
 
