@@ -1,5 +1,5 @@
 
-function SayHello(){
+function sayHello(){
     let current_value = document.getElementById("textarea_1") as HTMLInputElement;
     let new_value = "Hello world!!!" + "\n" + current_value.value;
     document.getElementById("textarea_1").innerHTML = new_value;
@@ -29,3 +29,74 @@ for(let i in lista){
 }
 
 console.log(lista.length);//nos va indicar el tamaño del array, esto no lleva parecentesis porque es un atributo
+
+/*
+function sumar(x: number, y:number):number {
+    return x + y;
+}
+function restar(x: number, y:number):number {
+    return x - y;
+}
+
+function ejecutar(numero1: number, numero2: number, func: any) {
+    alert(func(numero1, numero2));
+}
+
+
+window.addEventListener("load",  ()=> {
+    sayHello();
+    sayHello();
+    sayHello();
+    sayHello();
+    console.log(sumar(2, 3));
+});
+*/
+
+class Persona{
+    private nombre: string;
+    private apellido: string;
+
+    constructor(nombre: string, apellido: string){
+        this.nombre = nombre;
+        this.apellido = apellido;
+    }
+
+    saludar(){
+        alert("hola " + this.apellido);
+    }
+}
+
+class Estudiante extends Persona{
+
+}
+
+class Profesor extends Persona{
+    materia: string;
+
+    constructor(nombre: string, apellido: string, materia: string){
+        super(nombre,apellido);
+        this.materia = materia;
+    }
+
+    presentarse(){
+        super.saludar();
+        alert("Soy profesor de "+ this.materia);
+    }
+}
+
+window.addEventListener("load",  ()=> {
+
+    let boton = document.getElementById("btnSaludar");
+    boton.addEventListener("click",sayHello);
+
+
+    let persona: Persona = new Persona("Facundo", "Villa");
+    persona.saludar();
+
+    let profesor: Profesor = new Profesor("Matias", "Ramos","Aplicaciones Web");
+    profesor.presentarse();
+
+    let estudiante: Estudiante = new Estudiante("Leandro", "Ventura");
+
+});
+
