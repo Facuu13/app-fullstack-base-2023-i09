@@ -85,6 +85,11 @@ class Profesor extends Persona{
 }
 
 window.addEventListener("load",  ()=> {
+
+    let boton = document.getElementById("btnSaludar");
+    boton.addEventListener("click",sayHello);
+
+
     let persona: Persona = new Persona("Facundo", "Villa");
     persona.saludar();
 
@@ -94,3 +99,4 @@ window.addEventListener("load",  ()=> {
     let estudiante: Estudiante = new Estudiante("Leandro", "Ventura");
 
 });
+
