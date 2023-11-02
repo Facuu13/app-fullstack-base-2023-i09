@@ -10,8 +10,7 @@ class Usuario extends Persona{
     }
 
     mostrar():string{
-        //return this.nombre + " - "+ this.rol;
-        return `${this.info_completa()} - ${this.rol}`;
+        return `${this.info_completa()} - Rol: ${this.rol}\n`;
     }
 
     obtenerRol():string{

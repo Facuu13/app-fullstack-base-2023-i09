@@ -6,13 +6,16 @@ class Main implements EventListenerObject{
         let usuario2: Usuario = new Usuario("PAblo","Ventura","admin@gmail.com","admin","987654")
         this.usuarios.push(usuario1);
         this.usuarios.push(usuario2);
-        for (let u of this.usuarios){
-            console.log(u.mostrar())
-        }
     }
 
     handleEvent(object: Event): void {
         this.buscarPersonas();
+        let currentTextarea = document.getElementById("textarea_1") as HTMLTextAreaElement;
+
+        for (let u of this.usuarios) {
+            console.log(u.mostrar());
+            currentTextarea.value += u.mostrar();
+        }
     }
 
 }
