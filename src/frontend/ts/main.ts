@@ -29,3 +29,9 @@ window.addEventListener("load",  ()=> {
 
 });
 
+/*
+La clase usuario herede de una clase Persona que tenga nombre, apellido y mail
+y como generar la instancia usuario con esta herencia
+
+cuando hagamos click en el boton ademas de mostrarlo por consola que lo imprima en el cuadro de texto
+*/ 
