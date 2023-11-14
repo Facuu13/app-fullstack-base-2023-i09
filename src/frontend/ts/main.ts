@@ -17,8 +17,10 @@ class Main implements EventListenerObject{
                 if(xmlRequest.status == 200){
                     console.log(xmlRequest.responseText, xmlRequest.readyState);
                     let respusta = xmlRequest.responseText;
-                    let dato = JSON.parse(respusta);
-                    console.log(dato[1].name)
+                    let datos: Array<Device> = JSON.parse(respusta);
+                    for(let d of datos){
+                        console.log(d.name);
+                    }
                 }else{
                     console.log("No encontre nada")
                 }

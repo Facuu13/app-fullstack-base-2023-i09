@@ -5,6 +5,11 @@ body {
     flex-direction: column;
 }
 
+div>div.col{
+    background-color: bisque;
+    border: 2px solid black;
+}
+
 main {
     flex: 1 0 auto;
 }
