@@ -11,6 +11,8 @@ class Main implements EventListenerObject{
     }
 
     private buscarDevices(){
+        let div = document.getElementById("lista"); 
+        div.innerHTML = "<h1>Devices</h1> <ul id='devicesList'></ul>";
         let xmlRequest = new XMLHttpRequest();
         xmlRequest.onreadystatechange = ()=> {
             if(xmlRequest.readyState == 4){
@@ -18,8 +20,12 @@ class Main implements EventListenerObject{
                     console.log(xmlRequest.responseText, xmlRequest.readyState);
                     let respusta = xmlRequest.responseText;
                     let datos: Array<Device> = JSON.parse(respusta);
+                    let ul = document.getElementById("devicesList");
                     for(let d of datos){
                         console.log(d.name);
+                        let li = document.createElement('li');
+                        li.textContent = d.name;
+                        ul.appendChild(li);
                     }
                 }else{
                     console.log("No encontre nada")
@@ -76,3 +82,6 @@ window.addEventListener("load",  ()=> {
 
 
 });
+
+
+//el div mostrar la lista de dispositivos, recuperamos el div y ponemos un dispositivo uno abajo del otro
