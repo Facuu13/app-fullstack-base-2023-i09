@@ -51,7 +51,7 @@ class Main implements EventListenerObject{
     handleEvent(object: Event): void {
         let elemento = <HTMLElement> object.target;
         console.log(elemento.id)
-        if("btnSaludar" === elemento.id){ //el triple igual me valida el tipo de dato y el valor. El doble igual solamente el valor
+        if("btnListar" === elemento.id){ //el triple igual me valida el tipo de dato y el valor. El doble igual solamente el valor
             this.buscarDevices();
             
         } else if ("btnGuardar" === elemento.id){
@@ -66,7 +66,7 @@ window.addEventListener("load",  ()=> {
 
     let main: Main = new Main();
 
-    let boton = document.getElementById("btnSaludar");
+    let boton = document.getElementById("btnListar");
     boton.addEventListener("click",main);
 
     let botonGuardar = document.getElementById("btnGuardar")
