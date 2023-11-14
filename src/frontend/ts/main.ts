@@ -3,11 +3,30 @@ class Main implements EventListenerObject{
 
     private buscarPersonas(){
         let currentTextarea = document.getElementById("textarea_1") as HTMLTextAreaElement;
-
+        let obk = {"key":"value", "keynum":123, "bool":true};
             for (let u of this.usuarios) {
                 console.log(u.mostrar());
                 currentTextarea.value += u.mostrar();
             }
+    }
+
+    private buscarDevices(){
+        let xmlRequest = new XMLHttpRequest();
+        xmlRequest.onreadystatechange = ()=> {
+            if(xmlRequest.readyState == 4){
+                if(xmlRequest.status == 200){
+                    console.log(xmlRequest.responseText, xmlRequest.readyState);
+                    let respusta = xmlRequest.responseText;
+                    let dato = JSON.parse(respusta);
+                    console.log(dato[1].name)
+                }else{
+                    console.log("No encontre nada")
+                }
+            }
+            
+        }
+        xmlRequest.open("GET","http://localhost:8000/devices",true); //lo ponemos en true para que se ejecute de forma asincrona
+        xmlRequest.send();
     }
 
     private cargarUsuario(): void{
@@ -33,7 +52,7 @@ class Main implements EventListenerObject{
         let elemento = <HTMLElement> object.target;
         console.log(elemento.id)
         if("btnSaludar" === elemento.id){ //el triple igual me valida el tipo de dato y el valor. El doble igual solamente el valor
-            this.buscarPersonas();
+            this.buscarDevices();
             
         } else if ("btnGuardar" === elemento.id){
             this.cargarUsuario();
