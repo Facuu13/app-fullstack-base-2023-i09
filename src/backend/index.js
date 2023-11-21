@@ -3,7 +3,14 @@
 var PORT    = 3000;
 
 var express = require('express');
+
+var cors = require("cors");
+var corsOptions = {origin:"*",optionSucessStatus:200};
+
 var app     = express();
+
+app.use(cors(corsOptions));
+
 var utils   = require('./mysql-connector');
 
 // to parse application/json
@@ -12,6 +19,15 @@ app.use(express.json());
 app.use(express.static('/home/node/app/static/'));
 
 //=======[ Main module code ]==================================================
+
+app.post('/device',(req,res,next)=>{
+    console.log("Llego el post");
+    res.send("no tengo nada que hacer")
+});
+
+app.get('/otraCosa',(req,res,next)=>{
+    res.send("Listo");
+});
 
 app.get('/devices/', function(req, res, next) {
     devices = [

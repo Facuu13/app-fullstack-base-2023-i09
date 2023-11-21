@@ -68,11 +68,25 @@ class Main implements EventListenerObject{
 
     }
 
+    private ejecutarPost(){
+        let xmlRequest = new XMLHttpRequest();
+        xmlRequest.onreadystatechange = ()=> {
+            if(xmlRequest.readyState == 4){
+                if(xmlRequest.status == 200){
+                    console.log("llego respuesta",xmlRequest.responseText);
+                }
+            }
+
+        }
+        xmlRequest.open("POST","http://localhost:8000/device",true); //lo ponemos en true para que se ejecute de forma asincrona
+        xmlRequest.send();
+    }
+
     handleEvent(object: Event): void {
         let elemento = <HTMLElement> object.target;
         console.log(elemento.id)
         if("btnListar" === elemento.id){ //el triple igual me valida el tipo de dato y el valor. El doble igual solamente el valor
-            this.buscarDevices();
+            this.ejecutarPost();
             
         } else if ("btnGuardar" === elemento.id){
             this.cargarUsuario();
