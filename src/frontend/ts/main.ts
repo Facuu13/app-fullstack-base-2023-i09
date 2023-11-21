@@ -1,3 +1,4 @@
+var M;
 class Main implements EventListenerObject{
     public usuarios: Array<Usuario>= new Array<Usuario>();
 
@@ -12,7 +13,7 @@ class Main implements EventListenerObject{
 
     private buscarDevices(){
 
-
+// dependiendo del estado del dispositivo, habilitar el boton checked
         let xmlRequest = new XMLHttpRequest();
         xmlRequest.onreadystatechange = ()=> {
             if(xmlRequest.readyState == 4){
@@ -26,9 +27,7 @@ class Main implements EventListenerObject{
                         ul.innerHTML += `<li class="collection-item avatar">
                         <i class="material-icons circle green">insert_chart</i>
                         <span class="title">${d.name}</span>
-                        <p>${d.description} <br>
-                            ${d.state}
-                        </p>
+                        <p>${d.description}</p>
                         <a href="#!" class="secondary-content">
                         <div class="switch">
                             <label>
@@ -85,6 +84,12 @@ class Main implements EventListenerObject{
 
 window.addEventListener("load",  ()=> {
 
+    var elems = document.querySelectorAll('select');
+    M.FormSelect.init(elems, null);
+
+    var elemsModal = document.querySelectorAll('.modal');
+    M.Modal.init(elemsModal, null);
+
     let main: Main = new Main();
 
     let boton = document.getElementById("btnListar");
@@ -95,6 +100,3 @@ window.addEventListener("load",  ()=> {
 
 
 });
-
-
-//el div mostrar la lista de dispositivos, recuperamos el div y ponemos un dispositivo uno abajo del otro
