@@ -1,3 +1,4 @@
+var M;
 class Main implements EventListenerObject{
     public usuarios: Array<Usuario>= new Array<Usuario>();
 
@@ -11,8 +12,9 @@ class Main implements EventListenerObject{
     }
 
     private buscarDevices(){
-        let div = document.getElementById("lista"); 
-        div.innerHTML = "<h1>Devices</h1> <ul id='devicesList'></ul>";
+
+// dependiendo del estado del dispositivo, habilitar el boton checkbox y ademas cuando se haga click
+//asignar un evento post
         let xmlRequest = new XMLHttpRequest();
         xmlRequest.onreadystatechange = ()=> {
             if(xmlRequest.readyState == 4){
@@ -20,12 +22,106 @@ class Main implements EventListenerObject{
                     console.log(xmlRequest.responseText, xmlRequest.readyState);
                     let respusta = xmlRequest.responseText;
                     let datos: Array<Device> = JSON.parse(respusta);
-                    let ul = document.getElementById("devicesList");
+                    let ul = document.getElementById("listaDisp");
                     for(let d of datos){
                         console.log(d.name);
-                        let li = document.createElement('li');
-                        li.textContent = d.name;
-                        ul.appendChild(li);
+                        // Asigna 'checked' a isChecked si d.state es verdadero, de lo contrario, asigna una cadena vacía.
+                        //const isChecked = d.state ? 'checked' : '';
+
+                        /* //Otra solucion
+                        let s : string;
+                        if(d.state == true){
+                            console.log("es true",d.state);
+                            s= "checked"
+
+                        }else{
+                            console.log("es falso",d.state)
+                            s= ""
+                        }
+                        */
+
+                        // Generamos un ID único para el checkbox basado en el ID del dispositivo
+                        const checkboxId = `checkbox_${d.id}`;
+
+
+                        /*
+                        ul.innerHTML += `<li class="collection-item avatar">
+                        <i class="material-icons circle green">insert_chart</i>
+                        <span class="title">${d.name}</span>
+                        <p>${d.description}</p>
+                        <a href="#!" class="secondary-content">
+                        <div class="switch">
+                            <label>
+                                Off
+                            <input type="checkbox" id="${checkboxId}" ${isChecked} >
+                            <span class="lever"></span>
+                                On
+                            </label>
+                        </div></a>
+                        </li>`
+
+                        let checkbox = document.getElementById(checkboxId);
+                        checkbox.addEventListener("click",()=>{
+                            console.log("id",checkboxId);
+                            this.ejecutarPost();
+                        });
+                        */
+                    
+                        const li = document.createElement('li');
+                        li.classList.add('collection-item', 'avatar');
+
+                        const i = document.createElement('i');
+                        i.classList.add('material-icons', 'circle', 'green');
+                        i.textContent = 'insert_chart';
+
+                        const spanTitle = document.createElement('span');
+                        spanTitle.classList.add('title');
+                        spanTitle.textContent = d.name;
+
+                        const p = document.createElement('p');
+                        p.textContent = d.description;
+
+                        const a = document.createElement('a');
+                        a.href = '#!';
+                        a.classList.add('secondary-content');
+
+                        const divSwitch = document.createElement('div');
+                        divSwitch.classList.add('switch');
+
+                        const label = document.createElement('label');
+                        label.textContent = 'Off';
+
+                        const inputCheckbox = document.createElement('input');
+                        inputCheckbox.type = 'checkbox';
+                        inputCheckbox.id = checkboxId;
+                        inputCheckbox.checked = d.state;
+
+                        //cuando hacemos clic llama a la funcion
+                        inputCheckbox.onclick = () => { 
+                            this.ejecutarPost();
+                        };
+
+                        const spanLever = document.createElement('span');
+                        spanLever.classList.add('lever');
+
+                        const textNode = document.createTextNode('On');
+
+                        label.appendChild(inputCheckbox);
+                        label.appendChild(spanLever);
+                        label.appendChild(textNode);
+                
+                        divSwitch.appendChild(label);
+                
+                        a.appendChild(divSwitch);
+                
+                        li.appendChild(i);
+                        li.appendChild(spanTitle);
+                        li.appendChild(p);
+                        li.appendChild(a);
+
+                        if (ul) {
+                            ul.appendChild(li);
+                        }
                     }
                 }else{
                     console.log("No encontre nada")
@@ -56,6 +152,23 @@ class Main implements EventListenerObject{
 
     }
 
+    private ejecutarPost(){
+        let xmlRequest = new XMLHttpRequest();
+        xmlRequest.onreadystatechange = ()=> {
+            if(xmlRequest.readyState == 4){
+                if(xmlRequest.status == 200){
+                    console.log("llego respuesta",xmlRequest.responseText);
+                }
+            }
+
+        }
+        xmlRequest.open("POST","http://localhost:8000/device",true); //lo ponemos en true para que se ejecute de forma asincrona
+        xmlRequest.setRequestHeader("Content-Type","application/json"); //se indica el formato en el que se va enviar la informacion
+        let s = {name: "nuevo nombre",
+                description: "descripcion"};
+        xmlRequest.send(JSON.stringify(s));
+    }
+
     handleEvent(object: Event): void {
         let elemento = <HTMLElement> object.target;
         console.log(elemento.id)
@@ -64,6 +177,10 @@ class Main implements EventListenerObject{
             
         } else if ("btnGuardar" === elemento.id){
             this.cargarUsuario();
+        } else if("cb"==elemento.id){ //elemento.checked para saber si esta en true o false
+            let checkbox = <HTMLInputElement>elemento; //casteamos
+            console.log(checkbox.checked)
+            this.ejecutarPost();
         }
     }
 
@@ -71,6 +188,12 @@ class Main implements EventListenerObject{
 
 
 window.addEventListener("load",  ()=> {
+
+    var elems = document.querySelectorAll('select');
+    M.FormSelect.init(elems, null);
+
+    var elemsModal = document.querySelectorAll('.modal');
+    M.Modal.init(elemsModal, null);
 
     let main: Main = new Main();
 
@@ -80,8 +203,8 @@ window.addEventListener("load",  ()=> {
     let botonGuardar = document.getElementById("btnGuardar")
     botonGuardar.addEventListener("click",main)
 
+    let checkbox = document.getElementById("cb");
+    checkbox.addEventListener("click",main);
+
 
 });
-
-
-//el div mostrar la lista de dispositivos, recuperamos el div y ponemos un dispositivo uno abajo del otro
