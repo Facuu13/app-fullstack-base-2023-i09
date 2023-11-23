@@ -79,7 +79,10 @@ class Main implements EventListenerObject{
 
         }
         xmlRequest.open("POST","http://localhost:8000/device",true); //lo ponemos en true para que se ejecute de forma asincrona
-        xmlRequest.send();
+        xmlRequest.setRequestHeader("Content-Type","application/json"); //se indica el formato en el que se va enviar la informacion
+        let s = {name: "nuevo nombre",
+                description: "descripcion"};
+        xmlRequest.send(JSON.stringify(s));
     }
 
     handleEvent(object: Event): void {

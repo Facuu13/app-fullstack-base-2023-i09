@@ -21,8 +21,12 @@ app.use(express.static('/home/node/app/static/'));
 //=======[ Main module code ]==================================================
 
 app.post('/device',(req,res,next)=>{
-    console.log("Llego el post");
-    res.send("no tengo nada que hacer")
+    console.log("Llego el post",req.body.name);
+    if(req.body.name == ""){
+        res.status(409).send("no tengo nada que hacer")
+    }else{
+        res.status(200).send("Se guardo el dispositivo")
+    }
 });
 
 app.get('/otraCosa',(req,res,next)=>{
