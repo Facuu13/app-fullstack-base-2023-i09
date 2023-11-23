@@ -13,7 +13,8 @@ class Main implements EventListenerObject{
 
     private buscarDevices(){
 
-// dependiendo del estado del dispositivo, habilitar el boton checked
+// dependiendo del estado del dispositivo, habilitar el boton checkbox y ademas cuando se haga click
+//asignar un evento post
         let xmlRequest = new XMLHttpRequest();
         xmlRequest.onreadystatechange = ()=> {
             if(xmlRequest.readyState == 4){
@@ -89,10 +90,14 @@ class Main implements EventListenerObject{
         let elemento = <HTMLElement> object.target;
         console.log(elemento.id)
         if("btnListar" === elemento.id){ //el triple igual me valida el tipo de dato y el valor. El doble igual solamente el valor
-            this.ejecutarPost();
+            this.buscarDevices();
             
         } else if ("btnGuardar" === elemento.id){
             this.cargarUsuario();
+        } else if("cb"==elemento.id){ //elemento.checked para saber si esta en true o false
+            let checkbox = <HTMLInputElement>elemento; //casteamos
+            console.log(checkbox.checked)
+            this.ejecutarPost();
         }
     }
 
@@ -114,6 +119,9 @@ window.addEventListener("load",  ()=> {
 
     let botonGuardar = document.getElementById("btnGuardar")
     botonGuardar.addEventListener("click",main)
+
+    let checkbox = document.getElementById("cb");
+    checkbox.addEventListener("click",main);
 
 
 });
