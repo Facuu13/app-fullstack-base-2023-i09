@@ -25,6 +25,19 @@ class Main implements EventListenerObject{
                     let ul = document.getElementById("listaDisp");
                     for(let d of datos){
                         console.log(d.name);
+                        // Asigna 'checked' a isChecked si d.state es verdadero, de lo contrario, asigna una cadena vacía.
+                        const isChecked = d.state == true ? 'checked' : '';
+                        /* //Otra solucion
+                        let s : string;
+                        if(d.state == true){
+                            console.log("es true",d.state);
+                            s= "checked"
+
+                        }else{
+                            console.log("es falso",d.state)
+                            s= ""
+                        }
+                        */
                         ul.innerHTML += `<li class="collection-item avatar">
                         <i class="material-icons circle green">insert_chart</i>
                         <span class="title">${d.name}</span>
@@ -33,7 +46,7 @@ class Main implements EventListenerObject{
                         <div class="switch">
                             <label>
                                 Off
-                            <input type="checkbox">
+                            <input type="checkbox" ${isChecked} >
                             <span class="lever"></span>
                                 On
                             </label>
