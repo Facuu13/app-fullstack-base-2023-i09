@@ -26,7 +26,7 @@ class Main implements EventListenerObject{
                     for(let d of datos){
                         console.log(d.name);
                         // Asigna 'checked' a isChecked si d.state es verdadero, de lo contrario, asigna una cadena vacía.
-                        const isChecked = d.state == true ? 'checked' : '';
+                        const isChecked = d.state ? 'checked' : '';
                         /* //Otra solucion
                         let s : string;
                         if(d.state == true){
@@ -38,6 +38,10 @@ class Main implements EventListenerObject{
                             s= ""
                         }
                         */
+                    
+                        // Generamos un ID único para el checkbox basado en el ID del dispositivo
+                        const checkboxId = `checkbox_${d.id}`;
+                        
                         ul.innerHTML += `<li class="collection-item avatar">
                         <i class="material-icons circle green">insert_chart</i>
                         <span class="title">${d.name}</span>
@@ -46,7 +50,7 @@ class Main implements EventListenerObject{
                         <div class="switch">
                             <label>
                                 Off
-                            <input type="checkbox" ${isChecked} >
+                            <input type="checkbox" id="${checkboxId}" ${isChecked} >
                             <span class="lever"></span>
                                 On
                             </label>
