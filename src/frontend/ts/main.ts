@@ -26,7 +26,8 @@ class Main implements EventListenerObject{
                     for(let d of datos){
                         console.log(d.name);
                         // Asigna 'checked' a isChecked si d.state es verdadero, de lo contrario, asigna una cadena vacía.
-                        const isChecked = d.state ? 'checked' : '';
+                        //const isChecked = d.state ? 'checked' : '';
+
                         /* //Otra solucion
                         let s : string;
                         if(d.state == true){
@@ -38,10 +39,12 @@ class Main implements EventListenerObject{
                             s= ""
                         }
                         */
-                    
+
                         // Generamos un ID único para el checkbox basado en el ID del dispositivo
                         const checkboxId = `checkbox_${d.id}`;
-                        
+
+
+                        /*
                         ul.innerHTML += `<li class="collection-item avatar">
                         <i class="material-icons circle green">insert_chart</i>
                         <span class="title">${d.name}</span>
@@ -56,6 +59,69 @@ class Main implements EventListenerObject{
                             </label>
                         </div></a>
                         </li>`
+
+                        let checkbox = document.getElementById(checkboxId);
+                        checkbox.addEventListener("click",()=>{
+                            console.log("id",checkboxId);
+                            this.ejecutarPost();
+                        });
+                        */
+                    
+                        const li = document.createElement('li');
+                        li.classList.add('collection-item', 'avatar');
+
+                        const i = document.createElement('i');
+                        i.classList.add('material-icons', 'circle', 'green');
+                        i.textContent = 'insert_chart';
+
+                        const spanTitle = document.createElement('span');
+                        spanTitle.classList.add('title');
+                        spanTitle.textContent = d.name;
+
+                        const p = document.createElement('p');
+                        p.textContent = d.description;
+
+                        const a = document.createElement('a');
+                        a.href = '#!';
+                        a.classList.add('secondary-content');
+
+                        const divSwitch = document.createElement('div');
+                        divSwitch.classList.add('switch');
+
+                        const label = document.createElement('label');
+                        label.textContent = 'Off';
+
+                        const inputCheckbox = document.createElement('input');
+                        inputCheckbox.type = 'checkbox';
+                        inputCheckbox.id = checkboxId;
+                        inputCheckbox.checked = d.state;
+
+                        //cuando hacemos clic llama a la funcion
+                        inputCheckbox.onclick = () => { 
+                            this.ejecutarPost();
+                        };
+
+                        const spanLever = document.createElement('span');
+                        spanLever.classList.add('lever');
+
+                        const textNode = document.createTextNode('On');
+
+                        label.appendChild(inputCheckbox);
+                        label.appendChild(spanLever);
+                        label.appendChild(textNode);
+                
+                        divSwitch.appendChild(label);
+                
+                        a.appendChild(divSwitch);
+                
+                        li.appendChild(i);
+                        li.appendChild(spanTitle);
+                        li.appendChild(p);
+                        li.appendChild(a);
+
+                        if (ul) {
+                            ul.appendChild(li);
+                        }
                     }
                 }else{
                     console.log("No encontre nada")
