@@ -41,7 +41,7 @@ class Main implements EventListenerObject{
                         */
 
                         // Generamos un ID único para el checkbox basado en el ID del dispositivo
-                        const checkboxId = `checkbox_${d.id}`;
+                        const checkboxId = `cb_${d.id}`;
 
 
                         let listItem = document.createElement("li");
@@ -62,10 +62,7 @@ class Main implements EventListenerObject{
                         `
                         ul.appendChild(listItem);
                         let checkbox = document.getElementById(checkboxId);
-                        checkbox.addEventListener("click",()=>{
-                            console.log("id",checkboxId);
-                            this.ejecutarPost();
-                        });
+                        checkbox.addEventListener("click",this);
                         
                     }
                 }else{
@@ -97,7 +94,7 @@ class Main implements EventListenerObject{
 
     }
 
-    private ejecutarPost(){
+    private ejecutarPost(id:number,state:boolean){
         let xmlRequest = new XMLHttpRequest();
         xmlRequest.onreadystatechange = ()=> {
             if(xmlRequest.readyState == 4){
@@ -109,8 +106,8 @@ class Main implements EventListenerObject{
         }
         xmlRequest.open("POST","http://localhost:8000/device",true); //lo ponemos en true para que se ejecute de forma asincrona
         xmlRequest.setRequestHeader("Content-Type","application/json"); //se indica el formato en el que se va enviar la informacion
-        let s = {name: "nuevo nombre",
-                description: "descripcion"};
+        let s = {id:id,
+                state:state};
         xmlRequest.send(JSON.stringify(s));
     }
 
@@ -122,10 +119,10 @@ class Main implements EventListenerObject{
             
         } else if ("btnGuardar" === elemento.id){
             this.cargarUsuario();
-        } else if("cb"==elemento.id){ //elemento.checked para saber si esta en true o false
+        } else if(elemento.id.startsWith("cb_")){ //elemento.checked para saber si esta en true o false
             let checkbox = <HTMLInputElement>elemento; //casteamos
-            console.log(checkbox.checked)
-            this.ejecutarPost();
+            console.log(checkbox.checked,elemento.id.substring(3,4))
+            this.ejecutarPost(Number(elemento.id.substring(3,elemento.id.length)),checkbox.checked);
         }
     }
 

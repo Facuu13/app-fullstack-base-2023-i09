@@ -21,7 +21,7 @@ app.use(express.static('/home/node/app/static/'));
 //=======[ Main module code ]==================================================
 
 app.post('/device',(req,res,next)=>{
-    console.log("Llego el post",req.body.name);
+    console.log("Llego el post",req.body);
     if(req.body.name == ""){
         res.status(409).send("no tengo nada que hacer")
     }else{
