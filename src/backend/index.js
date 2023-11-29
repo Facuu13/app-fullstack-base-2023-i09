@@ -21,16 +21,27 @@ app.use(express.static('/home/node/app/static/'));
 //=======[ Main module code ]==================================================
 
 app.post('/device',(req,res,next)=>{
-    console.log("Llego el post",req.body);
+    console.log("Llego el post",
+    "UPDATE Devices SET state = "+req.body.state+" WHERE id = "+req.body.id);
     if(req.body.name == ""){
         res.status(409).send("no tengo nada que hacer")
     }else{
-        res.status(200).send("Se guardo el dispositivo")
+        res.status(200).send("Se actualizo el dispositivo")
     }
 });
 
-app.get('/otraCosa',(req,res,next)=>{
-    res.send("Listo");
+app.get('/otraCosa/:id',(req,res,next)=>{
+    console.log("id",req.params.id);
+    utils.query("select * from Devices where id="+req.params.id,(err,rsp,fields)=>{
+        if(err==null){ //devuelve null cuando la query es correcta
+            console.log("rps",rsp);
+            res.status(200).send(JSON.stringify(rsp));
+        }else{
+            console.log("err",err.Error);
+            res.status(409).send(err.Error);
+        }
+        
+    });
 });
 
 app.get('/devices/', function(req, res, next) {
