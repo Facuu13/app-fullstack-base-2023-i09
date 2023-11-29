@@ -61,9 +61,10 @@ class Main implements EventListenerObject{
                         </div></a>
                         `
                         ul.appendChild(listItem);
-                        let checkbox = document.getElementById(checkboxId);
+                    }
+                    for(let d of datos){
+                        let checkbox = document.getElementById(`cb_${d.id}`);
                         checkbox.addEventListener("click",this);
-                        
                     }
                 }else{
                     console.log("No encontre nada")
