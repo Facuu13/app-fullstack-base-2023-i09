@@ -11,7 +11,7 @@ class Main implements EventListenerObject{
             }
     }
 
-    private buscarDevices(){
+    private buscarDevices(devices){
 
 // dependiendo del estado del dispositivo, habilitar el boton checkbox y ademas cuando se haga click
 //asignar un evento post
@@ -95,6 +95,20 @@ class Main implements EventListenerObject{
 
     }
 
+    private ejecutarGet(){
+        let xmlRequest = new XMLHttpRequest();
+        xmlRequest.onreadystatechange = ()=> {
+            if(xmlRequest.readyState == 4){
+                if(xmlRequest.status == 200){
+                    console.log("llego respuesta",xmlRequest.responseText);
+                }
+            }
+
+        }
+        xmlRequest.open("GET","http://localhost:8000/devices",true); //lo ponemos en true para que se ejecute de forma asincrona
+        xmlRequest.send();
+    }
+
     private ejecutarPost(id:number,state:boolean){
         let xmlRequest = new XMLHttpRequest();
         xmlRequest.onreadystatechange = ()=> {
@@ -115,8 +129,8 @@ class Main implements EventListenerObject{
     handleEvent(object: Event): void {
         let elemento = <HTMLElement> object.target;
         console.log(elemento.id)
-        if("btnListar" === elemento.id){ //el triple igual me valida el tipo de dato y el valor. El doble igual solamente el valor
-            this.buscarDevices();
+        if("btnRefresh" === elemento.id){ //el triple igual me valida el tipo de dato y el valor. El doble igual solamente el valor
+            this.ejecutarGet();
             
         } else if ("btnGuardar" === elemento.id){
             this.cargarUsuario();
@@ -140,7 +154,7 @@ window.addEventListener("load",  ()=> {
 
     let main: Main = new Main();
 
-    let boton = document.getElementById("btnListar");
+    let boton = document.getElementById("btnRefresh");
     boton.addEventListener("click",main);
 
     let botonGuardar = document.getElementById("btnGuardar")
