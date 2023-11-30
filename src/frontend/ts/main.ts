@@ -11,7 +11,7 @@ class Main implements EventListenerObject{
             }
     }
 
-    private buscarDevices(devices){
+    private buscarDevices(){
 
 // dependiendo del estado del dispositivo, habilitar el boton checkbox y ademas cuando se haga click
 //asignar un evento post
@@ -23,6 +23,8 @@ class Main implements EventListenerObject{
                     let respusta = xmlRequest.responseText;
                     let datos: Array<Device> = JSON.parse(respusta);
                     let ul = document.getElementById("listaDisp");
+                    // Limpiar la lista antes de agregar los nuevos elementos
+                    ul.innerHTML = ''; 
                     for(let d of datos){
                         console.log(d.name);
                         // Asigna 'checked' a isChecked si d.state es verdadero, de lo contrario, asigna una cadena vacía.
@@ -95,20 +97,6 @@ class Main implements EventListenerObject{
 
     }
 
-    private ejecutarGet(){
-        let xmlRequest = new XMLHttpRequest();
-        xmlRequest.onreadystatechange = ()=> {
-            if(xmlRequest.readyState == 4){
-                if(xmlRequest.status == 200){
-                    console.log("llego respuesta",xmlRequest.responseText);
-                }
-            }
-
-        }
-        xmlRequest.open("GET","http://localhost:8000/devices",true); //lo ponemos en true para que se ejecute de forma asincrona
-        xmlRequest.send();
-    }
-
     private ejecutarPost(id:number,state:boolean){
         let xmlRequest = new XMLHttpRequest();
         xmlRequest.onreadystatechange = ()=> {
@@ -130,7 +118,7 @@ class Main implements EventListenerObject{
         let elemento = <HTMLElement> object.target;
         console.log(elemento.id)
         if("btnRefresh" === elemento.id){ //el triple igual me valida el tipo de dato y el valor. El doble igual solamente el valor
-            this.ejecutarGet();
+            this.buscarDevices();
             
         } else if ("btnGuardar" === elemento.id){
             this.cargarUsuario();
